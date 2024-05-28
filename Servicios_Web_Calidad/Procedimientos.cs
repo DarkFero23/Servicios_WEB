@@ -10,7 +10,7 @@ namespace Servicios_Web_Calidad
 {
     public class Procedimientos
     {
-        public string crearUsuarios(OracleConnection conn, string us_nom, string us_correo, string us_contraseña)
+        public string crearUsuarios(OracleConnection conn, string us_nom, string us_correo, string us_contraseña,string us_dni)
         {
 
             OracleParameter user_name = new OracleParameter();
@@ -26,6 +26,10 @@ namespace Servicios_Web_Calidad
             user_contra.OracleDbType = OracleDbType.Varchar2;
             user_contra.Value = us_contraseña;
 
+            OracleParameter user_dni = new OracleParameter();
+            user_dni.OracleDbType = OracleDbType.Varchar2;
+            user_dni.Value = us_dni;
+
             OracleCommand cmd = new OracleCommand();
             cmd.Connection = conn;
             cmd.CommandText = "crearUsuarios";
@@ -33,9 +37,11 @@ namespace Servicios_Web_Calidad
             cmd.Parameters.Add("Nombre_Completo:", OracleDbType.Varchar2).Value = user_name.Value;
             cmd.Parameters.Add("Correo:", OracleDbType.Varchar2).Value = user_cor.Value;
             cmd.Parameters.Add("Contraseña:", OracleDbType.Varchar2).Value = user_contra.Value;
+            cmd.Parameters.Add("DNI:", OracleDbType.Varchar2).Value = user_dni.Value;
+
             cmd.ExecuteNonQuery();
 
-            string respuesta = "Uusuario creado";
+            string respuesta = "Usuario creado exitosamente";
             conn.Dispose();
 
             return respuesta;
@@ -64,8 +70,11 @@ namespace Servicios_Web_Calidad
         }
 
 
-        public string actualizarUsuario(OracleConnection conn, string us_correo, string us_nom, string us_contrasena)
+        public string actualizarUsuario(OracleConnection conn, string us_dni, string us_correo, string us_nom, string us_contrasena)
         {
+            OracleParameter user_dni = new OracleParameter();
+            user_dni.OracleDbType = OracleDbType.Varchar2;
+            user_dni.Value = us_dni;
 
             OracleParameter user_nom = new OracleParameter();
             user_nom.OracleDbType = OracleDbType.Varchar2;
@@ -79,15 +88,15 @@ namespace Servicios_Web_Calidad
             user_contra.OracleDbType = OracleDbType.Varchar2;
             user_contra.Value = us_contrasena;
 
-
             OracleCommand cmd = new OracleCommand();
             cmd.Connection = conn;
             cmd.CommandText = "actualizarUsuario";
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
 
+            cmd.Parameters.Add("DNI:", OracleDbType.Varchar2).Value = user_dni.Value;
             cmd.Parameters.Add("Correo:", OracleDbType.Varchar2).Value = user_correo.Value;
-            cmd.Parameters.Add("Nombre_Completo(Nuevo):", OracleDbType.Varchar2).Value = user_nom.Value;
-            cmd.Parameters.Add("Contraseña(Nuevo):", OracleDbType.Varchar2).Value = user_contra.Value;
+            cmd.Parameters.Add("Nombre_Completo:", OracleDbType.Varchar2).Value = user_nom.Value;
+            cmd.Parameters.Add("Contraseña:", OracleDbType.Varchar2).Value = user_contra.Value;
             cmd.ExecuteNonQuery();
 
             string respuesta = "Usuario Actualizado";
@@ -96,19 +105,19 @@ namespace Servicios_Web_Calidad
             return respuesta;
         }
        
-        public string eliminarUsuario(OracleConnection conn, string us_correo)
+        public string eliminarUsuario(OracleConnection conn, string us_dni)
         {
 
             OracleParameter user_id = new OracleParameter();
             user_id.OracleDbType = OracleDbType.Varchar2;
-            user_id.Value = us_correo;
+            user_id.Value = us_dni;
 
 
             OracleCommand cmd = new OracleCommand();
             cmd.Connection = conn;
             cmd.CommandText = "eliminarUsuario";
             cmd.CommandType = System.Data.CommandType.StoredProcedure;
-            cmd.Parameters.Add("Correo:", OracleDbType.Varchar2).Value = user_id.Value;
+            cmd.Parameters.Add("DNI:", OracleDbType.Varchar2).Value = user_id.Value;
 
             cmd.ExecuteNonQuery();
 

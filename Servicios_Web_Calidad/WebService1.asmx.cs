@@ -18,7 +18,7 @@ namespace Servicios_Web_Calidad
     {
 
         [WebMethod]
-        public string crearUsuarios(string us_nom, string us_contra, string us_correo)
+        public string crearUsuarios(string us_nom, string us_contra, string us_correo, string us_dni)
         {
             Oracle_conection conn = new Oracle_conection();
             conn.EstablecerConnection();
@@ -26,7 +26,7 @@ namespace Servicios_Web_Calidad
             Procedimientos pc = new Procedimientos();
 
 
-            return pc.crearUsuarios(conn.GetConexion(), us_nom, us_contra, us_contra);
+            return pc.crearUsuarios(conn.GetConexion(), us_nom, us_contra, us_contra, us_dni);
 
         }
         [WebMethod]
@@ -41,7 +41,7 @@ namespace Servicios_Web_Calidad
 
         }
         [WebMethod]
-        public string actualizarUsuario(string us_correo, string us_nom, string us_contrasena)
+        public string actualizarUsuario(string us_dni,string us_correo, string us_nom, string us_contrasena)
         {
             Oracle_conection conn = new Oracle_conection();
             conn.EstablecerConnection();
@@ -49,12 +49,12 @@ namespace Servicios_Web_Calidad
             Procedimientos pc = new Procedimientos();
 
 
-            return pc.actualizarUsuario(conn.GetConexion(), us_correo, us_nom, us_contrasena);
+            return pc.actualizarUsuario(conn.GetConexion(), us_dni, us_correo, us_nom, us_contrasena);
 
 
         }
         [WebMethod]
-        public string eliminarUsuario(string us_correo)
+        public string eliminarUsuario(string us_dni)
         {
             Oracle_conection conn = new Oracle_conection();
             conn.EstablecerConnection();
@@ -62,7 +62,7 @@ namespace Servicios_Web_Calidad
             Procedimientos pc = new Procedimientos();
 
 
-            return pc.eliminarUsuario(conn.GetConexion(), us_correo);
+            return pc.eliminarUsuario(conn.GetConexion(), us_dni);
 
         }
         [WebMethod]
